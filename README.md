@@ -1,13 +1,1 @@
-2. 👁️ AI-powered “smart camera”
-Not face recognition.
 
-Build a vision system that understands events, not just objects.
-
-Example:
-
-Person enters → picks something up → leaves → camera reports what happened.
-
-Technical areas:
-object detection + tracking + pose estimation + temporal action recognition.
-
-That's significantly harder than YOLO + webcam.
