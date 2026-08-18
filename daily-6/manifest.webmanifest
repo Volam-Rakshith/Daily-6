@@ -1,0 +1,19 @@
+{
+  "name": "Daily 6",
+  "short_name": "Daily 6",
+  "description": "Six small challenges every day.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0e14",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
