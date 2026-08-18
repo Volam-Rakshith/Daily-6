@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Daily 6 — Make Today Count</title>
+  <meta name="description" content="Six small challenges every day. Build your streak, earn XP, learn, code and become better every day.">
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-2: #f1f2f7;
+      --text: #171722;
+      --muted: #6b6b7b;
+      --border: #e5e5ee;
+      --primary: #7c3aed;
+      --primary-2: #9f67ff;
+      --success: #16a34a;
+      --danger: #ef4444;
+      --shadow: 0 10px 35px rgba(20, 20, 40, .07);
+      --radius: 20px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0e0e14;
+      --surface: #171720;
+      --surface-2: #22222e;
+      --text: #f5f5fb;
+      --muted: #a0a0b2;
+      --border: #30303e;
+      --shadow: 0 10px 35px rgba(0, 0, 0, .3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1100px, calc(100% - 28px));
+      margin: auto;
+      padding: 18px 0 50px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 22px;
+      background: linear-gradient(135deg, var(--primary), #c084fc);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, .25);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(167, 139, 250, .4), transparent 35%),
+        linear-gradient(135deg, #25104c, #7c3aed);
+      color: white;
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: 0 20px 50px rgba(124, 58, 237, .22);
+      margin-bottom: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(26px, 5vw, 42px);
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      margin: 7px 0 0;
+      opacity: .82;
+    }
+
+    .date {
+      opacity: .75;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .streak {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 14px 16px;
+      border-radius: 18px;
+      text-align: center;
+      min-width: 115px;
+    }
+
+    .streak strong {
+      display: block;
+      font-size: 25px;
+    }
+
+    .streak span {
+      font-size: 11px;
+      opacity: .8;
+    }
+
+    .progress-wrap {
+      margin-top: 22px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 7px;
+      opacity: .9;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.16);
+    }
+
+    .progress > div {
+      height: 100%;
+      width: 0;
+      background: white;
+      border-radius: inherit;
+      transition: width .5s ease;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .emoji {
+      font-size: 20px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      margin-top: 7px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0 12px;
+    }
+
+    .section-title h2 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .challenge-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    .challenge {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 19px;
+      box-shadow: var(--shadow);
+      transition: .25s ease;
+      overflow: hidden;
+    }
+
+    .challenge:hover {
+      transform: translateY(-2px);
+    }
+
+    .challenge.completed {
+      border-color: rgba(22, 163, 74, .35);
+      background: linear-gradient(
+        135deg,
+        var(--surface),
+        rgba(22, 163, 74, .06)
+      );
+    }
+
+    .challenge.completed::after {
+      content: "✓";
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      background: var(--success);
+      color: white;
+      border-radius: 50%;
+      font-weight: 800;
+    }
+
+    .challenge-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: var(--surface-2);
+    }
+
+    .category-name {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: .7px;
+    }
+
+    .challenge h3 {
+      margin: 13px 0 7px;
+      font-size: 18px;
+    }
+
+    .challenge p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      min-height: 42px;
+    }
+
+    .challenge-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .xp {
+      color: #d97706;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .challenge-actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 11px;
+      padding: 9px 13px;
+      font-weight: 700;
+      font-size: 12px;
+      transition: .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: var(--primary);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+    }
+
+    .btn-success {
+      color: white;
+      background: var(--success);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h3 {
+      margin: 0 0 15px;
+      font-size: 16px;
+    }
+
+    .level {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .level-bar {
+      height: 9px;
+      background: var(--surface-2);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .level-bar div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #c084fc);
+      border-radius: inherit;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .day-cell {
+      aspect-ratio: 1;
+      border-radius: 7px;
+      background: var(--surface-2);
+      display: grid;
+      place-items: center;
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .day-cell.done-1 { background: #ddd6fe; color: #5b21b6; }
+    .day-cell.done-2 { background: #c4b5fd; color: #4c1d95; }
+    .day-cell.done-3 { background: #a78bfa; color: white; }
+    .day-cell.done-4 { background: #8b5cf6; color: white; }
+    .day-cell.done-5 { background: #7c3aed; color: white; }
+    .day-cell.done-6 { background: #5b21b6; color: white; }
+
+    [data-theme="dark"] .day-cell.done-1 {
+      background: #3b3158;
+      color: #ddd6fe;
+    }
+
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+    }
+
+    .achievement {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: var(--surface-2);
+      opacity: .42;
+    }
+
+    .achievement.unlocked {
+      opacity: 1;
+      border-color: #fbbf24;
+      background: linear-gradient(135deg, var(--surface-2), rgba(251,191,36,.08));
+    }
+
+    .achievement-icon {
+      font-size: 24px;
+    }
+
+    .achievement strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    .achievement small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .settings-row:last-child {
+      border-bottom: 0;
+    }
+
+    .settings-row strong {
+      font-size: 13px;
+    }
+
+    .settings-row small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    select,
+    input[type="time"] {
+      color: var(--text);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px;
+    }
+
+    .switch {
+      position: relative;
+      width: 45px;
+      height: 25px;
+      display: inline-block;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 99px;
+      background: #aaa;
+      transition: .2s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 19px;
+      height: 19px;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      background: white;
+      transition: .2s;
+    }
+
+    .switch input:checked + .slider {
+      background: var(--primary);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(20px);
+    }
+
+    .bottom-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .toast-container {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: grid;
+      gap: 8px;
+      width: min(92%, 400px);
+    }
+
+    .toast {
+      background: #171720;
+      color: white;
+      padding: 13px 16px;
+      border-radius: 14px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.3);
+      animation: toastIn .25s ease;
+      font-size: 13px;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      place-items: center;
+      background: rgba(10, 10, 20, .72);
+      backdrop-filter: blur(8px);
+    }
+
+    .celebration.show {
+      display: grid;
+    }
+
+    .celebration-card {
+      width: min(90%, 400px);
+      text-align: center;
+      background: var(--surface);
+      border-radius: 28px;
+      padding: 32px 22px;
+      animation: pop .35s ease;
+    }
+
+    .celebration-card .big {
+      font-size: 65px;
+    }
+
+    .celebration-card h2 {
+      margin: 8px 0;
+    }
+
+    .celebration-card p {
+      color: var(--muted);
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 30px 0 5px;
+    }
+
+    @media (max-width: 750px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .challenge-list,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-top {
+        flex-direction: column;
+      }
+
+      .streak {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .app {
+        width: min(100% - 18px, 1100px);
+      }
+
+      .hero {
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .challenge {
+        padding: 16px;
+      }
+
+      .achievements {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header>
+      <div class="brand">
+        <div class="logo">6</div>
+        <div>
+          <h1>Daily 6</h1>
+          <p>Make today count.</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="installBtn" title="Install app" hidden>📲</button>
+        <button class="icon-btn" id="themeBtn" title="Change theme">🌙</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h2 id="greeting">Good evening 👋</h2>
+          <p>Your six challenges are waiting.</p>
+          <div class="date" id="todayDate"></div>
+        </div>
+
+        <div class="streak">
+          <strong>🔥 <span id="streak">0</span></strong>
+          <span>DAY STREAK</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span>Today's Progress</span>
+          <strong id="progressText">0/6</strong>
+        </div>
+        <div class="progress">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat">
+        <div class="emoji">⭐</div>
+        <strong id="xp">0</strong>
+        <span>TOTAL XP</span>
+      </div>
+
+      <div class="stat">
+        <div class="emoji">🏆</div>
+        <strong id="level">1</strong>
+        <span>LEVEL</span>
+      </div>
+
+      <div class="stat">
+        <div class="emoji">🔥</div>
+        <strong id="longest">0</strong>
+        <span>LONGEST STREAK</span>
+      </div>
+
+      <div class="stat">
+        <div class="emoji">✅</div>
+        <strong id="completedTotal">0</strong>
+        <span>COMPLETED</span>
+      </div>
+    </section>
+
+    <div class="section-title">
+      <h2>Today's Challenges</h2>
+      <span id="challengeCount">0/6 complete</span>
+    </div>
+
+    <section class="challenge-list" id="challengeList"></section>
+
+    <div class="bottom-actions">
+      <button class="btn btn-primary" id="shareBtn">🔗 Share Today's Result</button>
+      <button class="btn btn-secondary" id="notifyBtn">🔔 Enable Notifications</button>
+    </div>
+
+    <section class="dashboard-grid">
+
+      <div class="panel">
+        <h3>⭐ Level Progress</h3>
+
+        <div class="level">
+          <span id="levelName">Level 1</span>
+          <span id="levelXP">0 / 100 XP</span>
+        </div>
+
+        <div class="level-bar">
+          <div id="levelBar"></div>
+        </div>
+
+        <div class="section-title">
+          <h2 style="font-size:14px;">Recent Activity</h2>
+          <span>Last 35 days</span>
+        </div>
+
+        <div class="calendar" id="calendar"></div>
+      </div>
+
+      <div class="panel">
+        <h3>🏆 Achievements</h3>
+        <div class="achievements" id="achievements"></div>
+      </div>
+
+    </section>
+
+    <section class="panel" style="margin-top:18px;">
+      <h3>📊 Statistics</h3>
+
+      <div class="stats-grid" style="margin:0;">
+        <div class="stat">
+          <div class="emoji">🎯</div>
+          <strong id="statProductive">0</strong>
+          <span>PRODUCTIVE</span>
+        </div>
+
+        <div class="stat">
+          <div class="emoji">🧠</div>
+          <strong id="statBrain">0</strong>
+          <span>BRAIN</span>
+        </div>
+
+        <div class="stat">
+          <div class="emoji">💪</div>
+          <strong id="statPhysical">0</strong>
+          <span>PHYSICAL</span>
+        </div>
+
+        <div class="stat">
+          <div class="emoji">💻</div>
+          <strong id="statCoding">0</strong>
+          <span>CODING</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px;">
+      <h3>⚙️ Settings</h3>
+
+      <div class="settings-row">
+        <div>
+          <strong>Theme</strong>
+          <small>Choose your preferred appearance.</small>
+        </div>
+
+        <select id="themeSelect">
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+
+      <div class="settings-row">
+        <div>
+          <strong>Daily reminder</strong>
+          <small>Remind you to complete your Daily 6.</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="reminderToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-row">
+        <div>
+          <strong>Reminder time</strong>
+          <small>Used when the app is open.</small>
+        </div>
+
+        <input type="time" id="reminderTime" value="19:00">
+      </div>
+
+      <div class="settings-row">
+        <div>
+          <strong>Achievement notifications</strong>
+          <small>Celebrate when you unlock achievements.</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="achievementNotifications" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-row">
+        <div>
+          <strong>Streak warnings</strong>
+          <small>Warn you when your streak is at risk.</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="streakWarnings" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="bottom-actions">
+        <button class="btn btn-secondary" id="testNotificationBtn">
+          🔔 Test Notification
+        </button>
+
+        <button class="btn btn-secondary" id="resetBtn">
+          Reset My Data
+        </button>
+      </div>
+    </section>
+
+    <footer>
+      Daily 6 • Your data stays on your device.
+    </footer>
+
+  </main>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="celebration" id="celebration">
+    <div class="celebration-card">
+      <div class="big">🎉</div>
+      <h2 id="celebrationTitle">Amazing!</h2>
+      <p id="celebrationText">You completed all six challenges.</p>
+      <button class="btn btn-primary" onclick="closeCelebration()">Keep Going 🚀</button>
+    </div>
+  </div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   DAILY 6
+   Pure client-side app
+   ============================================================ */
+
+const STORAGE_KEY = "daily6-v1";
+
+const categories = [
+  {
+    id: "productive",
+    icon: "🎯",
+    name: "Productive",
+    color: "#7c3aed"
+  },
+  {
+    id: "brain",
+    icon: "🧠",
+    name: "Brain",
+    color: "#2563eb"
+  },
+  {
+    id: "physical",
+    icon: "💪",
+    name: "Physical",
+    color: "#16a34a"
+  },
+  {
+    id: "learning",
+    icon: "📚",
+    name: "Learning",
+    color: "#ea580c"
+  },
+  {
+    id: "fun",
+    icon: "😊",
+    name: "Fun",
+    color: "#db2777"
+  },
+  {
+    id: "coding",
+    icon: "💻",
+    name: "Coding",
+    color: "#0891b2"
+  }
+];
+
+const challenges = {
+  productive: [
+    ["Clean your desk for 10 minutes.", "Remove distractions and make your workspace easier to use.", 10],
+    ["Plan tomorrow's top 3 tasks.", "Write down the three things that matter most tomorrow.", 10],
+    ["Organize your phone.", "Delete 10 unnecessary screenshots, files or apps.", 10],
+    ["Finish one small unfinished task.", "Pick something that has been sitting on your list.", 10],
+    ["Declutter one small area.", "Choose one drawer, shelf or corner and organize it.", 10],
+    ["Do a 15-minute focused work session.", "Put your phone away and work without interruptions.", 20],
+    ["Prepare your things for tomorrow.", "Get your clothes, bag, books or workspace ready.", 10],
+    ["Write down one goal for this week.", "Make it specific and achievable.", 10],
+    ["Spend 10 minutes organizing your files.", "Clean your downloads folder or desktop.", 10],
+    ["Do the task you've been avoiding.", "Start with only 10 minutes.", 20]
+  ],
+
+  brain: [
+    ["Solve a logic puzzle.", "Spend at least 10 minutes solving one without looking up the answer.", 20],
+    ["Do 10 mental-math questions.", "Try to solve them without a calculator.", 10],
+    ["Memorize 10 random words.", "Test yourself after five minutes.", 15],
+    ["Play a strategy game.", "Chess, Sudoku, 2048 or another strategy game.", 15],
+    ["Write down five alternative uses for a common object.", "Choose something like a paperclip.", 15],
+    ["Solve a riddle.", "Find a challenging riddle and solve it.", 10],
+    ["Learn one interesting fact.", "Then explain it from memory in your own words.", 10],
+    ["Do a pattern-recognition puzzle.", "Try to find the rule before checking the answer.", 15],
+    ["Spend 10 minutes reading something difficult.", "Choose a topic outside your normal interests.", 15],
+    ["Write a short argument for both sides of a topic.", "Try to understand opposing perspectives.", 20]
+  ],
+
+  physical: [
+    ["Do 20 squats.", "Take breaks if necessary and focus on good form.", 10],
+    ["Take a 15-minute walk.", "Leave your phone in your pocket and observe your surroundings.", 15],
+    ["Do 10 push-ups.", "Use an easier variation if needed.", 10],
+    ["Stretch for 10 minutes.", "Focus on gentle, comfortable movements.", 10],
+    ["Do a 5-minute movement break.", "Walk, stretch or move continuously for five minutes.", 10],
+    ["Climb some stairs.", "Do a few comfortable trips at your own pace.", 15],
+    ["Do 30 jumping jacks.", "Stop if something hurts or you feel unwell.", 10],
+    ["Stand and move every hour today.", "Set a reminder and take a short movement break.", 15],
+    ["Go outside for 15 minutes.", "Get some fresh air and walk around.", 15],
+    ["Do a beginner bodyweight workout.", "Keep it comfortable and focus on consistency.", 20]
+  ],
+
+  learning: [
+    ["Learn 5 new words.", "Choose a language or subject you're interested in.", 15],
+    ["Watch a 10-minute educational video.", "Choose something that teaches a real concept.", 15],
+    ["Read 5 pages of a book.", "Write down one thing you learned.", 15],
+    ["Learn one keyboard shortcut.", "Use it at least five times today.", 10],
+    ["Learn one historical event.", "Explain what happened in your own words.", 15],
+    ["Learn one scientific concept.", "Try explaining it like you're teaching a child.", 20],
+    ["Learn something about another country.", "Find its geography, culture or history interesting.", 15],
+    ["Read an article about a topic you know little about.", "Write one sentence summarizing it.", 15],
+    ["Learn one new vocabulary word.", "Use it in three sentences.", 10],
+    ["Teach yourself something for 20 minutes.", "Pick any useful topic you're curious about.", 20]
+  ],
+
+  fun: [
+    ["Listen to an album or playlist you love.", "Put away distractions and actually enjoy it.", 10],
+    ["Talk to someone you like.", "Send them a message or have a real conversation.", 10],
+    ["Draw something for 10 minutes.", "It doesn't need to be good.", 10],
+    ["Watch something funny.", "Give yourself permission to relax.", 10],
+    ["Try a new snack or recipe.", "Make something simple and enjoyable.", 15],
+    ["Play a game.", "Take some guilt-free time to enjoy yourself.", 15],
+    ["Take a funny photo.", "Capture something that makes you smile.", 10],
+    ["Write down three things you enjoy.", "Keep the list somewhere you can revisit.", 10],
+    ["Explore somewhere nearby.", "Take a short walk somewhere you don't usually go.", 15],
+    ["Do something creative.", "Music, drawing, writing, photography or anything else.", 20]
+  ],
+
+  coding: [
+    ["Reverse a string.", "Write a function that reverses a string without using reverse().", 20],
+    ["Build FizzBuzz.", "Print numbers 1–100, replacing multiples of 3 and 5.", 20],
+    ["Check for a palindrome.", "Write a function that determines whether a word reads the same backward.", 20],
+    ["Find the largest number.", "Write a function that finds the largest value in an array.", 20],
+    ["Count vowels.", "Write a function that counts vowels in a string.", 20],
+    ["Build a tip calculator.", "Create a small UI where a user enters a bill and tip percentage.", 30],
+    ["Build a random quote generator.", "Use JavaScript to select a quote from an array.", 30],
+    ["Build a countdown timer.", "Create a timer with start, pause and reset.", 30],
+    ["Build a simple calculator.", "Support addition, subtraction, multiplication and division.", 30],
+    ["Build a password strength checker.", "Rate a password based on length and character types.", 30],
+    ["Build a word counter.", "Count words and characters as the user types.", 30],
+    ["Use a public API.", "Fetch data from a free API and display it on a page.", 40],
+    ["Build a weather UI.", "Create the interface first and connect a weather API if desired.", 40],
+    ["Build a habit tracker.", "Track completion for at least three habits.", 40],
+    ["Build a mini notes app.", "Create, edit and delete notes using localStorage.", 40],
+    ["Build a small game.", "Make a guessing game, reaction game or memory game.", 50],
+    ["Build a GitHub profile viewer.", "Use the GitHub API to display public profile information.", 50],
+    ["Build a mini expense tracker.", "Add expenses and calculate totals by category.", 50],
+    ["Build a Pomodoro timer.", "Add work/break cycles and session counting.", 50],
+    ["Build a complete mini project.", "Create something useful and publish it on GitHub Pages.", 60]
+  ]
+};
+
+const achievements = [
+  {
+    id: "first",
+    icon: "🌱",
+    title: "First Step",
+    description: "Complete your first challenge.",
+    test: s => s.totalCompleted >= 1
+  },
+  {
+    id: "six",
+    icon: "⚡",
+    title: "Full Power",
+    description: "Complete all 6 in one day.",
+    test: s => s.history[s.today]?.completedCount === 6
+  },
+  {
+    id: "streak7",
+    icon: "🔥",
+    title: "7 Day Warrior",
+    description: "Reach a 7-day streak.",
+    test: s => s.longestStreak >= 7
+  },
+  {
+    id: "streak30",
+    icon: "👑",
+    title: "30 Day Legend",
+    description: "Reach a 30-day streak.",
+    test: s => s.longestStreak >= 30
+  },
+  {
+    id: "xp100",
+    icon: "💯",
+    title: "Century",
+    description: "Earn 100 XP.",
+    test: s => s.xp >= 100
+  },
+  {
+    id: "xp1000",
+    icon: "🚀",
+    title: "XP Machine",
+    description: "Earn 1,000 XP.",
+    test: s => s.xp >= 1000
+  },
+  {
+    id: "coding7",
+    icon: "💻",
+    title: "Code Every Day",
+    description: "Complete 7 coding challenges.",
+    test: s => s.categoryTotals.coding >= 7
+  },
+  {
+    id: "learning50",
+    icon: "📚",
+    title: "Always Learning",
+    description: "Complete 50 learning challenges.",
+    test: s => s.categoryTotals.learning >= 50
+  },
+  {
+    id: "total100",
+    icon: "🏆",
+    title: "Centurion",
+    description: "Complete 100 challenges.",
+    test: s => s.totalCompleted >= 100
+  },
+  {
+    id: "allCategories",
+    icon: "🌈",
+    title: "Balanced",
+    description: "Complete at least one challenge in every category.",
+    test: s => categories.every(c => s.categoryTotals[c.id] >= 1)
+  }
+];
+
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+}
+
+function dateFromKey(key) {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function formatDate(date) {
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+
+function seededRandom(seed) {
+  let h = 2166136261;
+
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+
+  return function() {
+    h += h << 13;
+    h ^= h >>> 7;
+    h += h << 3;
+    h ^= h >>> 17;
+    h += h << 5;
+
+    return ((h >>> 0) / 4294967296);
+  };
+}
+
+function pickDailyChallenge(categoryId, dateKey, offset = 0) {
+  const list = challenges[categoryId];
+  const random = seededRandom(dateKey + categoryId + offset);
+  const index = Math.floor(random() * list.length);
+  const item = list[index];
+
+  return {
+    id: categoryId + "-" + dateKey + "-" + offset,
+    category: categoryId,
+    title: item[0],
+    description: item[1],
+    xp: item[2],
+    completed: false
+  };
+}
+
+function defaultState() {
+  return {
+    today: todayKey(),
+    xp: 0,
+    currentStreak: 0,
+    longestStreak: 0,
+    totalCompleted: 0,
+    history: {},
+    categoryTotals: {
+      productive: 0,
+      brain: 0,
+      physical: 0,
+      learning: 0,
+      fun: 0,
+      coding: 0
+    },
+    achievements: [],
+    replacements: {},
+    theme: "system",
+    reminderEnabled: false,
+    reminderTime: "19:00",
+    achievementNotifications: true,
+    streakWarnings: true,
+    dailyChallenges: []
+  };
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    if (!saved) {
+      return defaultState();
+    }
+
+    return {
+      ...defaultState(),
+      ...saved,
+      categoryTotals: {
+        ...defaultState().categoryTotals,
+        ...(saved.categoryTotals || {})
+      }
+    };
+  } catch {
+    return defaultState();
+  }
+}
+
+let state = loadState();
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function createTodayChallenges() {
+  const date = todayKey();
+
+  return categories.map(category => {
+    return pickDailyChallenge(category.id, date, 0);
+  });
+}
+
+function ensureToday() {
+  const date = todayKey();
+
+  if (state.today !== date) {
+    state.today = date;
+    state.dailyChallenges = createTodayChallenges();
+    state.replacements = {};
+    save();
+  }
+
+  if (
+    !Array.isArray(state.dailyChallenges) ||
+    state.dailyChallenges.length !== 6
+  ) {
+    state.dailyChallenges = createTodayChallenges();
+    save();
+  }
+
+  if (!state.history[date]) {
+    state.history[date] = {
+      completedCount: 0,
+      completedCategories: [],
+      xpEarned: 0
+    };
+    save();
+  }
+}
+
+function getTodayProgress() {
+  const completed = state.dailyChallenges.filter(c => c.completed).length;
+  return completed;
+}
+
+function calculateLevel(xp) {
+  return Math.floor(xp / 100) + 1;
+}
+
+function xpInLevel(xp) {
+  return xp % 100;
+}
+
+function updateStreak() {
+  const keys = Object.keys(state.history)
+    .filter(k => state.history[k].completedCount > 0)
+    .sort();
+
+  if (!keys.length) {
+    state.currentStreak = 0;
+    return;
+  }
+
+  let streak = 0;
+  let cursor = new Date();
+
+  for (;;) {
+    const key =
+      cursor.getFullYear() + "-" +
+      String(cursor.getMonth() + 1).padStart(2, "0") + "-" +
+      String(cursor.getDate()).padStart(2, "0");
+
+    if (
+      state.history[key] &&
+      state.history[key].completedCount > 0
+    ) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  state.currentStreak = streak;
+  state.longestStreak = Math.max(state.longestStreak, streak);
+}
+
+function render() {
+  ensureToday();
+  updateStreak();
+
+  const progress = getTodayProgress();
+  const level = calculateLevel(state.xp);
+  const levelProgress = xpInLevel(state.xp);
+
+  document.getElementById("todayDate").textContent =
+    formatDate(new Date());
+
+  document.getElementById("streak").textContent =
+    state.currentStreak;
+
+  document.getElementById("xp").textContent =
+    state.xp;
+
+  document.getElementById("level").textContent =
+    level;
+
+  document.getElementById("longest").textContent =
+    state.longestStreak;
+
+  document.getElementById("completedTotal").textContent =
+    state.totalCompleted;
+
+  document.getElementById("progressText").textContent =
+    `${progress}/6`;
+
+  document.getElementById("challengeCount").textContent =
+    `${progress}/6 complete`;
+
+  document.getElementById("progressBar").style.width =
+    `${(progress / 6) * 100}%`;
+
+  document.getElementById("levelName").textContent =
+    `Level ${level}`;
+
+  document.getElementById("levelXP").textContent =
+    `${levelProgress} / 100 XP`;
+
+  document.getElementById("levelBar").style.width =
+    `${levelProgress}%`;
+
+  document.getElementById("reminderToggle").checked =
+    state.reminderEnabled;
+
+  document.getElementById("reminderTime").value =
+    state.reminderTime;
+
+  document.getElementById("achievementNotifications").checked =
+    state.achievementNotifications;
+
+  document.getElementById("streakWarnings").checked =
+    state.streakWarnings;
+
+  renderChallenges();
+  renderAchievements();
+  renderCalendar();
+  renderStats();
+  applyTheme();
+
+  save();
+}
+
+function renderChallenges() {
+  const container = document.getElementById("challengeList");
+  container.innerHTML = "";
+
+  state.dailyChallenges.forEach((challenge, index) => {
+    const category = categories.find(c => c.id === challenge.category);
+
+    const card = document.createElement("article");
+    card.className =
+      "challenge" + (challenge.completed ? " completed" : "");
+
+    card.innerHTML = `
+      <div class="challenge-head">
+        <div class="category-icon">${category.icon}</div>
+
+        <div>
+          <div class="category-name">${category.name}</div>
+          <div class="xp">+${challenge.xp} XP</div>
+        </div>
+      </div>
+
+      <h3>${escapeHTML(challenge.title)}</h3>
+
+      <p>${escapeHTML(challenge.description)}</p>
+
+      <div class="challenge-footer">
+        <div></div>
+
+        <div class="challenge-actions">
+          ${
+            challenge.completed
+              ? `<button class="btn btn-success" onclick="undoChallenge(${index})">
+                   Undo
+                 </button>`
+              : `<button class="btn btn-secondary" onclick="replaceChallenge(${index})">
+                   🔄 Replace
+                 </button>
+                 <button class="btn btn-primary" onclick="completeChallenge(${index})">
+                   Complete
+                 </button>`
+          }
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function completeChallenge(index) {
+  const challenge = state.dailyChallenges[index];
+
+  if (!challenge || challenge.completed) {
+    return;
+  }
+
+  challenge.completed = true;
+
+  state.xp += challenge.xp;
+  state.totalCompleted++;
+  state.categoryTotals[challenge.category]++;
+
+  const date = todayKey();
+  const history = state.history[date];
+
+  history.completedCount++;
+  history.xpEarned += challenge.xp;
+
+  if (!history.completedCategories.includes(challenge.category)) {
+    history.completedCategories.push(challenge.category);
+  }
+
+  const oldLevel = calculateLevel(state.xp - challenge.xp);
+
+  checkAchievements();
+
+  const newLevel = calculateLevel(state.xp);
+
+  if (newLevel > oldLevel) {
+    showToast(`🚀 Level ${newLevel} reached!`);
+  } else {
+    showToast(`⭐ +${challenge.xp} XP`);
+  }
+
+  if (getTodayProgress() === 6) {
+    state.xp += 50;
+    history.xpEarned += 50;
+
+    showCelebration(
+      "🔥 PERFECT DAY!",
+      "You completed all 6 challenges! +50 bonus XP."
+    );
+  }
+
+  checkAchievements();
+  save();
+  render();
+}
+
+function undoChallenge(index) {
+  const challenge = state.dailyChallenges[index];
+
+  if (!challenge || !challenge.completed) {
+    return;
+  }
+
+  challenge.completed = false;
+
+  state.xp = Math.max(0, state.xp - challenge.xp);
+  state.totalCompleted = Math.max(0, state.totalCompleted - 1);
+  state.categoryTotals[challenge.category] =
+    Math.max(0, state.categoryTotals[challenge.category] - 1);
+
+  const history = state.history[todayKey()];
+
+  history.completedCount =
+    Math.max(0, history.completedCount - 1);
+
+  history.xpEarned =
+    Math.max(0, history.xpEarned - challenge.xp);
+
+  history.completedCategories =
+    history.completedCategories.filter(
+      c => c !== challenge.category
+    );
+
+  save();
+  render();
+}
+
+function replaceChallenge(index) {
+  const current = state.dailyChallenges[index];
+
+  if (!current || current.completed) {
+    return;
+  }
+
+  const key = current.category;
+
+  state.replacements[key] =
+    (state.replacements[key] || 0) + 1;
+
+  if (state.replacements[key] > 3) {
+    showToast("🔒 You used all 3 replacements for this category today.");
+    return;
+  }
+
+  const replacementNumber = state.replacements[key];
+
+  state.dailyChallenges[index] =
+    pickDailyChallenge(
+      key,
+      todayKey(),
+      replacementNumber
+    );
+
+  save();
+  render();
+
+  showToast("🔄 New challenge!");
+}
+
+function checkAchievements() {
+  achievements.forEach(a => {
+    if (
+      !state.achievements.includes(a.id) &&
+      a.test(state)
+    ) {
+      state.achievements.push(a.id);
+
+      if (state.achievementNotifications) {
+        sendNotification(
+          `🏆 ${a.title}`,
+          a.description
+        );
+      }
+
+      showToast(`🏆 Achievement unlocked: ${a.title}`);
+    }
+  });
+}
+
+function renderAchievements() {
+  const container = document.getElementById("achievements");
+  container.innerHTML = "";
+
+  achievements.forEach(a => {
+    const unlocked = state.achievements.includes(a.id);
+
+    const div = document.createElement("div");
+
+    div.className =
+      "achievement" + (unlocked ? " unlocked" : "");
+
+    div.innerHTML = `
+      <div class="achievement-icon">
+        ${unlocked ? a.icon : "🔒"}
+      </div>
+
+      <strong>${escapeHTML(a.title)}</strong>
+
+      <small>${escapeHTML(a.description)}</small>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function renderCalendar() {
+  const container = document.getElementById("calendar");
+  container.innerHTML = "";
+
+  const today = new Date();
+
+  for (let i = 34; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+
+    const key =
+      date.getFullYear() + "-" +
+      String(date.getMonth() + 1).padStart(2, "0") + "-" +
+      String(date.getDate()).padStart(2, "0");
+
+    const count =
+      state.history[key]?.completedCount || 0;
+
+    const cell = document.createElement("div");
+
+    cell.className =
+      "day-cell" + (count ? ` done-${Math.min(count, 6)}` : "");
+
+    cell.title =
+      `${formatDate(date)}: ${count}/6`;
+
+    cell.textContent =
+      date.getDate();
+
+    container.appendChild(cell);
+  }
+}
+
+function renderStats() {
+  document.getElementById("statProductive").textContent =
+    state.categoryTotals.productive;
+
+  document.getElementById("statBrain").textContent =
+    state.categoryTotals.brain;
+
+  document.getElementById("statPhysical").textContent =
+    state.categoryTotals.physical;
+
+  document.getElementById("statCoding").textContent =
+    state.categoryTotals.coding;
+}
+
+function showToast(message) {
+  const container = document.getElementById("toastContainer");
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+function showCelebration(title, text) {
+  document.getElementById("celebrationTitle").textContent =
+    title;
+
+  document.getElementById("celebrationText").textContent =
+    text;
+
+  document.getElementById("celebration")
+    .classList.add("show");
+}
+
+function closeCelebration() {
+  document.getElementById("celebration")
+    .classList.remove("show");
+}
+
+function escapeHTML(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+/* ============================================================
+   THEME
+   ============================================================ */
+
+function applyTheme() {
+  let theme = state.theme;
+
+  if (theme === "system") {
+    theme =
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+  }
+
+  document.documentElement.dataset.theme = theme;
+
+  document.getElementById("themeBtn").textContent =
+    theme === "dark" ? "☀️" : "🌙";
+
+  document.getElementById("themeSelect").value =
+    state.theme;
+}
+
+document.getElementById("themeBtn").addEventListener("click", () => {
+  state.theme =
+    state.theme === "dark"
+      ? "light"
+      : state.theme === "light"
+        ? "system"
+        : "dark";
+
+  save();
+  applyTheme();
+});
+
+document.getElementById("themeSelect").addEventListener("change", e => {
+  state.theme = e.target.value;
+  save();
+  applyTheme();
+});
+
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", () => {
+    if (state.theme === "system") {
+      applyTheme();
+    }
+  });
+
+/* ============================================================
+   SHARING
+   ============================================================ */
+
+async function shareResult() {
+  const progress = getTodayProgress();
+
+  const text =
+`🎯 Daily 6
+
+I completed ${progress}/6 challenges today!
+🔥 ${state.currentStreak} day streak
+⭐ ${state.xp} XP
+🏆 Level ${calculateLevel(state.xp)}
+
+Can you beat my streak?`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "My Daily 6",
+        text
+      });
+
+      return;
+    } catch {
+      return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast("📋 Result copied to clipboard!");
+  } catch {
+    window.prompt("Copy your result:", text);
+  }
+}
+
+document.getElementById("shareBtn")
+  .addEventListener("click", shareResult);
+
+/* ============================================================
+   NOTIFICATIONS
+   ============================================================ */
+
+async function requestNotifications() {
+  if (!("Notification" in window)) {
+    showToast("❌ Notifications aren't supported here.");
+    return false;
+  }
+
+  if (Notification.permission === "granted") {
+    showToast("🔔 Notifications are already enabled.");
+    return true;
+  }
+
+  if (Notification.permission === "denied") {
+    showToast("⚠️ Notifications are blocked in browser settings.");
+    return false;
+  }
+
+  const permission =
+    await Notification.requestPermission();
+
+  if (permission === "granted") {
+    showToast("🔔 Notifications enabled!");
+    return true;
+  }
+
+  showToast("Notifications weren't enabled.");
+  return false;
+}
+
+async function sendNotification(title, body) {
+  if (!("Notification" in window)) {
+    return;
+  }
+
+  if (Notification.permission !== "granted") {
+    return;
+  }
+
+  try {
+    if ("serviceWorker" in navigator) {
+      const registration =
+        await navigator.serviceWorker.ready;
+
+      await registration.showNotification(title, {
+        body,
+        icon: "./icon.svg",
+        badge: "./icon.svg",
+        tag: "daily6",
+        renotify: true
+      });
+
+      return;
+    }
+  } catch {}
+
+  try {
+    new Notification(title, { body });
+  } catch {}
+}
+
+document.getElementById("notifyBtn")
+  .addEventListener("click", async () => {
+    await requestNotifications();
+  });
+
+document.getElementById("testNotificationBtn")
+  .addEventListener("click", async () => {
+    const allowed = await requestNotifications();
+
+    if (allowed) {
+      sendNotification(
+        "🎯 Daily 6",
+        "Your Daily 6 is waiting. Keep your streak alive!"
+      );
+    }
+  });
+
+/* ============================================================
+   SETTINGS
+   ============================================================ */
+
+document.getElementById("reminderToggle")
+  .addEventListener("change", async e => {
+    state.reminderEnabled = e.target.checked;
+
+    if (state.reminderEnabled) {
+      await requestNotifications();
+    }
+
+    save();
+  });
+
+document.getElementById("reminderTime")
+  .addEventListener("change", e => {
+    state.reminderTime = e.target.value;
+    save();
+    showToast(`⏰ Reminder set for ${e.target.value}`);
+  });
+
+document.getElementById("achievementNotifications")
+  .addEventListener("change", e => {
+    state.achievementNotifications = e.target.checked;
+    save();
+  });
+
+document.getElementById("streakWarnings")
+  .addEventListener("change", e => {
+    state.streakWarnings = e.target.checked;
+    save();
+  });
+
+document.getElementById("resetBtn")
+  .addEventListener("click", () => {
+    const confirmed =
+      confirm(
+        "Delete all Daily 6 progress? This cannot be undone."
+      );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    state = defaultState();
+    state.dailyChallenges = createTodayChallenges();
+    save();
+    render();
+
+    showToast("Your data has been reset.");
+  });
+
+/* ============================================================
+   IN-APP REMINDER
+   ============================================================ */
+
+let reminderTimer = null;
+
+function setupReminder() {
+  if (reminderTimer) {
+    clearInterval(reminderTimer);
+  }
+
+  if (!state.reminderEnabled) {
+    return;
+  }
+
+  reminderTimer = setInterval(() => {
+    const now = new Date();
+
+    const current =
+      String(now.getHours()).padStart(2, "0") +
+      ":" +
+      String(now.getMinutes()).padStart(2, "0");
+
+    if (
+      current === state.reminderTime &&
+      getTodayProgress() < 6
+    ) {
+      sendNotification(
+        "🔥 Keep your Daily 6 streak!",
+        `You've completed ${getTodayProgress()}/6 today.`
+      );
+    }
+  }, 60000);
+}
+
+/* ============================================================
+   PWA INSTALL
+   ============================================================ */
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredPrompt = event;
+
+  document.getElementById("installBtn").hidden = false;
+});
+
+document.getElementById("installBtn")
+  .addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+
+    document.getElementById("installBtn").hidden = true;
+  });
+
+/* ============================================================
+   SERVICE WORKER
+   ============================================================ */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then(() => {
+        console.log("Daily 6 service worker registered.");
+      })
+      .catch(error => {
+        console.warn("Service worker failed:", error);
+      });
+  });
+}
+
+/* ============================================================
+   GREETING
+   ============================================================ */
+
+function updateGreeting() {
+  const hour = new Date().getHours();
+
+  let greeting = "Good evening 👋";
+
+  if (hour < 5) {
+    greeting = "Still awake? 🌙";
+  } else if (hour < 12) {
+    greeting = "Good morning ☀️";
+  } else if (hour < 18) {
+    greeting = "Good afternoon 👋";
+  }
+
+  document.getElementById("greeting").textContent =
+    greeting;
+}
+
+/* ============================================================
+   START
+   ============================================================ */
+
+ensureToday();
+updateGreeting();
+render();
+setupReminder();
+
+setInterval(() => {
+  ensureToday();
+  updateGreeting();
+  render();
+  setupReminder();
+}, 60000);
+
+</script>
+
+</body>
+</html>
